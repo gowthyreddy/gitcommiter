@@ -1,0 +1,8 @@
+google-generativeai>=0.3.0
+langgraph>=0.0.40
+langchain-core>=0.1.0
+langchain-google-genai>=0.0.6
+GitPython>=3.1.40
+python-dotenv>=1.0.0
+typer>=0.9.0
+rich>=13.0.0

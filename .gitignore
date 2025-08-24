@@ -1,0 +1,9 @@
+node_modules/
+out/
+.vscode-test/
+py/__pycache__/
+py/.env
+*.pyc
+.DS_Store
+*.log
+py/.env.example

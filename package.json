@@ -1,0 +1,127 @@
+{
+  "name": "auto-commit-messages-python",
+  "displayName": "Auto Commit Messages (Python + LangGraph)",
+  "description": "Generate intelligent commit messages using Python, Google AI, and LangGraph",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "SCM Providers"
+  ],
+  "keywords": [
+    "git",
+    "commit",
+    "ai",
+    "python",
+    "langgraph",
+    "automation"
+  ],
+  "activationEvents": [
+    "onCommand:autoCommitMessages.generate"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "autoCommitMessages.generate",
+        "title": "Generate Commit Message",
+        "category": "Auto Commit",
+        "icon": "$(git-commit)"
+      },
+      {
+        "command": "autoCommitMessages.setup",
+        "title": "Setup Python Environment",
+        "category": "Auto Commit"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "autoCommitMessages.generate",
+          "when": "scmProvider == git",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "autoCommitMessages.generate",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "autoCommitMessages.setup"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Auto Commit Messages",
+      "properties": {
+        "autoCommitMessages.googleApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Google AI API Key"
+        },
+        "autoCommitMessages.model": {
+          "type": "string",
+          "default": "gemini-1.5-flash",
+          "description": "Google AI model to use",
+          "enum": [
+            "gemini-1.5-flash",
+            "gemini-1.5-pro",
+            "gemini-pro"
+          ]
+        },
+        "autoCommitMessages.temperature": {
+          "type": "number",
+          "default": 0.3,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Temperature for AI generation (0.0 to 1.0)"
+        },
+        "autoCommitMessages.maxTokens": {
+          "type": "number",
+          "default": 100,
+          "description": "Maximum tokens for commit message generation"
+        },
+        "autoCommitMessages.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Path to Python executable (use 'python' for system Python or full path)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "setup-python": "cd python && pip install -r requirements.txt",
+    "setup-env": "cp python/.env.example python/.env",
+    "test-python": "cd python && python commit_generator.py --help",
+    "test-python-full": "cd python && python commit_generator.py . --json",
+    "clean": "rimraf out && rimraf node_modules",
+    "dev": "npm run compile && echo 'Press F5 in VS Code to start development'",
+    "quickstart": "npm install && npm run setup-python && npm run setup-env && npm run compile && echo 'Setup complete! Add your API key to python/.env and press F5 in VS Code'"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  }
+}
